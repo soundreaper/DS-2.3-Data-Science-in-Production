@@ -1,0 +1,14 @@
+flask
+flask_restplus
+numpy==1.18.4
+Pillow
+werkzeug
+tensorflow==1.14.0
+Keras==2.2.4
+Keras-Applications==1.0.8
+Keras-Preprocessing==1.1.2
+
+
+
+
+
