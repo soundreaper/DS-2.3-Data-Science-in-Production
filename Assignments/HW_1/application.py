@@ -16,6 +16,7 @@ from tensorflow.python.keras.backend import set_session
 app = Flask(__name__)
 api = Api(app, version='1.0', title='MNIST Classification', description='CNN for Mnist')
 ns = api.namespace('Make_School', description='Methods')
+application = app
 
 single_parser = api.parser()
 single_parser.add_argument('file', location='files',
@@ -34,7 +35,7 @@ set_session(sess)
 with open('model_architecture.json', 'r') as f:
     model = model_from_json(f.read())
 #
-# # Load weights into the new model
+# Load weights into the new model
 model.load_weights('model_weights.h5')
 
 @ns.route('/prediction')
@@ -55,6 +56,7 @@ class CNNPrediction(Resource):
         # loaded each and every time a new request comes in.
         # model = load_model('my_model.h5')
         with graph.as_default():
+            set_session(sess)
             out = model.predict(x)
         print(out[0])
         print(np.argmax(out[0]))
@@ -64,4 +66,4 @@ class CNNPrediction(Resource):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    application.run()
